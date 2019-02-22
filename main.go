@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// Person is a struct of ID, FirstName, LastName & Address of a person
 type Person struct {
 	ID        string   `json:"id,omitempty"`
 	Firstname string   `json:"firstname,omitempty"`
@@ -15,6 +16,7 @@ type Person struct {
 	Address   *Address `json:"address,omitempty"`
 }
 
+// Address is a small struct for city & state details
 type Address struct {
 	City  string `json:"city,omitempty"`
 	State string `json:"state,omitempty"`
@@ -37,11 +39,12 @@ func main() {
 
 }
 
-//"GetPeople..."(undefined)
+// GetPeople is Endpoint to get the data of all available people in system
 func GetPeople(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(people)
 }
 
+// GetPerson is Endpoint to get the data of a requested person
 func GetPerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range people {
@@ -53,6 +56,7 @@ func GetPerson(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Person{})
 }
 
+// CreatePerson is Endoint to add the new person in the database
 func CreatePerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	var person Person
@@ -62,6 +66,7 @@ func CreatePerson(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(people)
 }
 
+// DeletePerson is Endpoint to deleted a particular person from the existing database
 func DeletePerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for index, item := range people {
